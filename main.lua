@@ -1,7 +1,7 @@
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
-local Keybind = "R"
+local Keybind = "S"
 
 local localPlayer = Players.LocalPlayer
 local camera = workspace.CurrentCamera
