@@ -8,17 +8,19 @@ local camera = workspace.CurrentCamera
 local CAMERA_DISTANCE_THRESHOLD = 30
 local toggleCameraLock = false
 
-_G.Keybind = _G.Keybind or "R"
+-- Set default keybind; can be dynamically changed
+_G.Keybind = _G.Keybind or "T"  -- Set this before executing the script
 
-local function convertKeyToEnum(key)
-    local keyUpper = string.upper(key)
-    local success, enum = pcall(function()
-        return Enum.KeyCode[keyUpper]
-    end)
-    return success and enum or nil
+local function getKeyCodeFromString(key)
+    key = key:upper() -- Normalize to uppercase for matching
+    return Enum.KeyCode[key] or nil
 end
 
-local KeybindEnum = convertKeyToEnum(_G.Keybind)
+local KeybindEnum = getKeyCodeFromString(_G.Keybind)
+
+if not KeybindEnum then
+    warn("Invalid keybind! Please set _G.Keybind to a valid key like 'T', 'R', etc.")
+end
 
 local function isEnemy(player)
     if player.Team ~= localPlayer.Team then
