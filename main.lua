@@ -1,6 +1,7 @@
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
+local Keybind = "R"
 
 local localPlayer = Players.LocalPlayer
 local camera = workspace.CurrentCamera
@@ -45,7 +46,7 @@ local function lockCamera()
 end
 
 local function onInputBegan(input, gameProcessed)
-    if input.KeyCode == Enum.KeyCode.R and not gameProcessed then
+    if input.KeyCode == Enum.KeyCode.Keybind and not gameProcessed then
         toggleCameraLock = not toggleCameraLock
         if toggleCameraLock then
             print("Camera lock enabled.")
