@@ -9,7 +9,7 @@ local CAMERA_DISTANCE_THRESHOLD = 30
 local toggleCameraLock = false
 
 -- Set default keybind; can be dynamically changed
-_G.Keybind = _G.Keybind or "T"  -- Set this before executing the script
+shared.Keybind = shared.Keybind or "R"  -- Set this before executing the script
 
 local function getKeyCodeFromString(key)
     key = key:upper() -- Normalize to uppercase for matching
