@@ -8,38 +8,17 @@ local camera = workspace.CurrentCamera
 local CAMERA_DISTANCE_THRESHOLD = 30
 local toggleCameraLock = false
 
--- Default keybind (can be overridden by setting Keybind to a string)
-local Keybind = "R"
+_G.Keybind = _G.Keybind or "R"
 
--- Create a map of string to Enum.KeyCode for compatibility
-local KeyCodeMap = {
-    ["A"] = Enum.KeyCode.A,
-    ["B"] = Enum.KeyCode.B,
-    ["C"] = Enum.KeyCode.C,
-    ["D"] = Enum.KeyCode.D,
-    ["E"] = Enum.KeyCode.E,
-    ["F"] = Enum.KeyCode.F,
-    ["G"] = Enum.KeyCode.G,
-    ["H"] = Enum.KeyCode.H,
-    ["I"] = Enum.KeyCode.I,
-    ["J"] = Enum.KeyCode.J,
-    ["K"] = Enum.KeyCode.K,
-    ["L"] = Enum.KeyCode.L,
-    ["M"] = Enum.KeyCode.M,
-    ["N"] = Enum.KeyCode.N,
-    ["O"] = Enum.KeyCode.O,
-    ["P"] = Enum.KeyCode.P,
-    ["Q"] = Enum.KeyCode.Q,
-    ["R"] = Enum.KeyCode.R,
-    ["S"] = Enum.KeyCode.S,
-    ["T"] = Enum.KeyCode.T,
-    ["U"] = Enum.KeyCode.U,
-    ["V"] = Enum.KeyCode.V,
-    ["W"] = Enum.KeyCode.W,
-    ["X"] = Enum.KeyCode.X,
-    ["Y"] = Enum.KeyCode.Y,
-    ["Z"] = Enum.KeyCode.Z,
-}
+local function convertKeyToEnum(key)
+    local keyUpper = string.upper(key)
+    local success, enum = pcall(function()
+        return Enum.KeyCode[keyUpper]
+    end)
+    return success and enum or nil
+end
+
+local KeybindEnum = convertKeyToEnum(_G.Keybind)
 
 local function isEnemy(player)
     if player.Team ~= localPlayer.Team then
@@ -78,7 +57,7 @@ local function lockCamera()
 end
 
 local function onInputBegan(input, gameProcessed)
-    if input.KeyCode == KeyCodeMap[Keybind] and not gameProcessed then
+    if input.KeyCode == KeybindEnum and not gameProcessed then
         toggleCameraLock = not toggleCameraLock
         if toggleCameraLock then
             print("Camera lock enabled.")
