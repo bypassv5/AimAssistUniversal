@@ -1,13 +1,15 @@
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
-local Keybind = "S"
 
 local localPlayer = Players.LocalPlayer
 local camera = workspace.CurrentCamera
 
 local CAMERA_DISTANCE_THRESHOLD = 30
 local toggleCameraLock = false
+
+-- Default keybind (can be overridden by setting Keybind to a string)
+local Keybind = "R"
 
 local function isEnemy(player)
     if player.Team ~= localPlayer.Team then
@@ -46,7 +48,8 @@ local function lockCamera()
 end
 
 local function onInputBegan(input, gameProcessed)
-    if input.KeyCode == Enum.KeyCode.Keybind and not gameProcessed then
+    -- Compare input key to user-defined Keybind string
+    if input.KeyCode == Enum.KeyCode[Keybind] and not gameProcessed then
         toggleCameraLock = not toggleCameraLock
         if toggleCameraLock then
             print("Camera lock enabled.")
@@ -61,5 +64,6 @@ local function onRenderStep()
         lockCamera()
     end
 end
+
 UserInputService.InputBegan:Connect(onInputBegan)
 RunService.RenderStepped:Connect(onRenderStep)
